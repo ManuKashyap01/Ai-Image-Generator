@@ -1,5 +1,5 @@
 import React,{useState} from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Form, useNavigate } from 'react-router-dom'
 import { preview } from '../assets'
 import {getRandomPrompt} from '../utils'
 import { FormField,Loader } from '../components'
@@ -27,8 +27,29 @@ const CreatePost = () => {
     setformdata({...formdata,prompt:randomPrompt})
   }
 
-  const generateImg=()=>{
+  const generateImg=async ()=>{
+    if(formdata.prompt){
+      try {
+        setloadingimg(true)
+        const response=await fetch('http://localhost:8080/api/v1/dalle',{
+          method:'POST',
+          headers:{
+            'Content-Type':'application/json'
+          },
+          body:JSON.stringify({prompt:formdata.prompt})
+        })
 
+        const data=await response.json()
+
+        setformdata({...formdata,photo:data.photo})
+      } catch (error) {
+        console.log('error in generate image function in create post',error)
+      }finally{
+        setloadingimg(false)
+      }
+    }else{
+      alert('Please enter a prompt')
+    }
   }
   return (
     <section className="max-w-7xl mx-auto">
