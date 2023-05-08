@@ -14,8 +14,30 @@ const CreatePost = () => {
   const [loadingimg, setloadingimg] = useState(false)
   const [loading, setloading] = useState(false)
 
-  const handleSubmit=()=>{
-
+  const handleSubmit=async (e)=>{
+    // handle submits for sharing with community button
+    e.preventDefault()
+    if(formdata.prompt && formdata.photo){
+      setloading(true)
+      try {
+        const res=await fetch('http://localhost:8080/api/v1/post',{
+          method:'POST',
+          headers:{
+            'Content-Type':'application/json'
+          },
+          body: JSON.stringify(formdata)
+        })
+        await res.json()
+        navigate('/')
+      } catch (error) {
+        alert('something went wrong')
+        console.log(error)
+      }finally{
+        setloading(false)
+      }
+    }else{
+      alert('Enter a prompt or generate an image')
+    }
   }
 
   const handleChange=(e)=>{
@@ -39,9 +61,11 @@ const CreatePost = () => {
           body:JSON.stringify({prompt:formdata.prompt})
         })
 
-        const data=await response.json()
+        const data=await response.json().then((res)=>{
+          console.log('ai res',res)
+          setformdata({...formdata,photo:res.photo})
+        })
 
-        setformdata({...formdata,photo:data.photo})
       } catch (error) {
         console.log('error in generate image function in create post',error)
       }finally{

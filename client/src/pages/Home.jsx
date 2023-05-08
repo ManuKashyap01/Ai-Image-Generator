@@ -20,7 +20,31 @@ const RenderPosts=({data,title})=>{
 const Home = () => {
   const [loading, setloading] = useState(false)
   const [allposts, setallposts] = useState(null)
-  const [querytext, setquerytext] = useState('hello')
+  const [querytext, setquerytext] = useState('')
+  useEffect(() => {
+    const fetchPosts=async()=>{
+      setloading(true)
+      try {
+        fetch('http://localhost:8080/api/v1/post',{
+            method:'GET',
+            headers:{
+              'Content-Type':'application/json'
+            },
+          })
+          .then(blob=>blob.json())
+          .then(res=>{
+            setallposts(res.data.reverse())
+            console.log(allposts)
+          })
+      } catch (error) {
+        console.log('error in fetchposts function on home page',error)
+      }finally{
+        setloading(false)
+      }
+    }
+    fetchPosts()
+  },[])
+  
   return (
     <section className="max-w-7xl mx-auto">
       <div>
@@ -56,7 +80,7 @@ const Home = () => {
                   />
                 ):(
                   <RenderPosts
-                    data={[]}
+                    data={allposts}
                     title="No posts found!"
                   />
                 )}

@@ -1,5 +1,6 @@
 import express from "express";
 import * as dotenv from 'dotenv'
+import fetch from 'node-fetch'
 import { Configuration,OpenAIApi } from "openai";
 
 dotenv.config()
@@ -10,11 +11,11 @@ Once the router object is created, it can be used to define routes using the rou
 */
 const router=express.Router()
 
-const configuration=new Configuration({
-    apiKey:process.env.OPENAI_KEY,
-})
+// const configuration=new Configuration({
+//     apiKey:'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',
+// })
 
-const openai=new OpenAIApi(configuration)
+// const openai=new OpenAIApi(configuration)
 
 router.route('/').get((req,res)=>{
     res.send('Hello from inner dalle')
@@ -24,19 +25,36 @@ router.route('/').post(async (req,res)=>{
     try {
         const {prompt}=req.body
         // console.log(prompt)
-        const aiResponse=await openai.createImage({
-            prompt,
-            n:1,
-            size:'1024x1024',
-            response_format:'url'
-        })
-
-        const image=aiResponse.data.data[0].url
-
-        res.status(200).send({photo:image})
+        const aiResponse=await fetch(
+            `https://api.edenai.run/v2/image/generation`,
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${process.env.EDENAI_API_KEY}`
+              },
+              body: JSON.stringify({
+                providers: 'openai',
+                text: prompt,
+                resolution: '512x512',
+                num_images: 1
+              })
+            }
+          );
+        
+        const data = await aiResponse.json();
+        const image=data.openai.items[0].image_resource_url
+        console.log(data,image);
+        res.status(200).json({photo:image})
     } catch (error) {
-        console.log('error in post route of dalle',error)
-        res.status(500).send(error)
+        // used the if else clause below for debugging
+    //     if (error.response) {
+    //     console.log("Avatar error status: ", error.response.status);
+    //     console.log("Avatar error data: ", error.response.data);
+    //   } else {
+    //     console.log("Avatar error message: ", error.message);
+    //   }
+        res.status(500).json(error)
     }
 })
 // export the router to be used as middleware in index.js file
