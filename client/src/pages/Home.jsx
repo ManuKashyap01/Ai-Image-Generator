@@ -21,6 +21,8 @@ const Home = () => {
   const [loading, setloading] = useState(false)
   const [allposts, setallposts] = useState(null)
   const [querytext, setquerytext] = useState('')
+  const [searchresults, setsearchresults] = useState(null)
+  const [searchtimeout, setsearchtimeout] = useState(null)
   useEffect(() => {
     const fetchPosts=async()=>{
       setloading(true)
@@ -44,6 +46,22 @@ const Home = () => {
     }
     fetchPosts()
   },[])
+
+  const handleSearch=(e)=>{
+    clearTimeout(searchtimeout)
+
+    setquerytext(e.target.value)
+    
+    setsearchtimeout(
+      setTimeout(() => {
+        const searchRes=allposts.filter((item)=>{
+          return item.name.toLowerCase().includes(querytext.toLowerCase())
+          || item.prompt.toLowerCase().includes(querytext.toLowerCase())
+        })
+        setsearchresults(searchRes)
+      }, 500)
+    )
+  }
   
   return (
     <section className="max-w-7xl mx-auto">
@@ -57,7 +75,14 @@ const Home = () => {
         </p>
 
         <div className="mt-16">
-          <FormField/>
+          <FormField 
+            label='Search posts'
+            type='text'
+            name='text'
+            placeholder='Search Posts'
+            value={querytext}
+            handleChange={handleSearch}
+          />
         </div>
 
         <div className="mt-10">
@@ -75,7 +100,7 @@ const Home = () => {
               <div className="grid lg:grid-cols-4 sm:grid-cols-3 xs:grid-cols-2 grid-cols-1 gap-3">
                 {querytext?(
                   <RenderPosts
-                    data={[]}
+                    data={searchresults}
                     title="No search results found!"
                   />
                 ):(
