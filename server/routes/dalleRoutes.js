@@ -12,7 +12,7 @@ Once the router object is created, it can be used to define routes using the rou
 const router=express.Router()
 
 // const configuration=new Configuration({
-//     apiKey:'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',
+//     apiKey:'api key',
 // })
 
 // const openai=new OpenAIApi(configuration)
