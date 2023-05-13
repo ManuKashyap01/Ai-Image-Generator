@@ -20,7 +20,7 @@ By using the cors() middleware, the Express.js application is allowing cross-ori
 This means that the application can receive requests from other domains
 */
 app.use(cors({
-    origin:'https://creatify1.netlify.app/'
+    origin:'https://creatify1.netlify.app'
 }))
 
 /*This code sets up a middleware function in an Express.js application that parses incoming requests with JSON payloads. 
