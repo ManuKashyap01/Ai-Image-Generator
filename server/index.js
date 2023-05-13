@@ -19,7 +19,9 @@ This is done to prevent malicious websites from accessing sensitive data from ot
 By using the cors() middleware, the Express.js application is allowing cross-origin requests from any domain. 
 This means that the application can receive requests from other domains
 */
-app.use(cors())
+app.use(cors({
+    origin:'https://creatify1.netlify.app/'
+}))
 
 /*This code sets up a middleware function in an Express.js application that parses incoming requests with JSON payloads. 
 
