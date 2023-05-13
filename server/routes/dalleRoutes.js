@@ -1,7 +1,7 @@
 import express from "express";
 import * as dotenv from 'dotenv'
 import fetch from 'node-fetch'
-import { Configuration,OpenAIApi } from "openai";
+// import { Configuration,OpenAIApi } from "openai";
 
 dotenv.config()
 
