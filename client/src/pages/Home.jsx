@@ -88,7 +88,8 @@ const Home = () => {
 
         <div className="mt-10">
           <Sugar customLoading={loading} background='#bada55' time={0}/>
-          {querytext && (
+            {!loading && 
+            <>{querytext && (
               <h2 className="font-medium text-[#666e75] mb-3 text-xl">
                 Showing results for <span className='text-[#bada55]'>{querytext}</span>
               </h2>
@@ -105,7 +106,8 @@ const Home = () => {
                     title="No posts found!"
                   />
               )}
-            </div>
+              </div>
+              </>}
         </div>
       </div>
     </section>
