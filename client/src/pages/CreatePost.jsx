@@ -49,7 +49,8 @@ const CreatePost = () => {
     setformdata({...formdata,prompt:randomPrompt})
   }
 
-  const generateImg=async ()=>{
+  const generateImg=async (e)=>{
+    e.preventDefault()
     if(formdata.prompt){
       try {
         setloadingimg(true)
@@ -86,7 +87,7 @@ const CreatePost = () => {
           Create imaginative and visually stunning images through DALL-E AI Second Draft and share them with the community
         </p>
       </div>
-      <form onSubmit={handleSubmit} className="mt-12 max-w-3xl">
+      <form onSubmit={generateImg} className="mt-12 max-w-3xl">
         <div className="flex flex-col gap-2">
           <FormField
             label="Your name"
@@ -121,13 +122,13 @@ const CreatePost = () => {
           </div>
         </div>
         <div className="mt-5 flex gap-5">
-          <button type='button' onClick={generateImg} className='text-white bg-[#bada55] px-5 py-2.5 rounded-md w-full sm:w-auto text-center font-medium tracking-wide' >
+          <button type='submit' onClick={generateImg} className='text-white bg-[#bada55] px-5 py-2.5 rounded-md w-full sm:w-auto text-center font-medium tracking-wide' >
             {loadingimg ? "Generating..." : "Generate"}
           </button>
         </div>
         <div className="mt-10">
             <p className="mt-2 text-[#666e75] text-sm">Once you have created your image, You can even share it on the community timeline!</p>
-            <button type='submit' className='mt-3 text-white bg-[#bada55] px-5 py-2.5 rounded-md w-full sm:w-auto text-center font-medium tracking-wide' >
+            <button type='button' onClick={handleSubmit} className='mt-3 text-white bg-[#bada55] px-5 py-2.5 rounded-md w-full sm:w-auto text-center font-medium tracking-wide' >
             {loading ? "Sharing..." : "Share with the community"}
           </button>
         </div>

@@ -1,5 +1,6 @@
 import React,{useState,useEffect} from 'react'
 import { Card, FormField, Loader } from '../components'
+import {Sugar} from 'react-preloaders';
 
 const RenderPosts=({data,title})=>{
   if(data?.length>0){
@@ -36,11 +37,11 @@ const Home = () => {
           .then(blob=>blob.json())
           .then(res=>{
             setallposts(res.data.reverse())
+            setloading(false)
             console.log(allposts)
           })
       } catch (error) {
         console.log('error in fetchposts function on home page',error)
-      }finally{
         setloading(false)
       }
     }
@@ -86,19 +87,14 @@ const Home = () => {
         </div>
 
         <div className="mt-10">
-          {loading?(
-            <div className="flex justify-center items-center">
-              <Loader/>
-            </div>
-          ):(
-            <>
-              {querytext && (
-                <h2 className="font-medium text-[#666e75] mb-3 text-xl">
-                  Showing results for <span className='text-[#bada55]'>{querytext}</span>
-                </h2>
-              )}
-              <div className="grid lg:grid-cols-4 sm:grid-cols-3 xs:grid-cols-2 grid-cols-1 gap-3">
-                {querytext?(
+          <Sugar customLoading={loading} background='#bada55' time={0}/>
+          {querytext && (
+              <h2 className="font-medium text-[#666e75] mb-3 text-xl">
+                Showing results for <span className='text-[#bada55]'>{querytext}</span>
+              </h2>
+            )}
+            <div className="grid lg:grid-cols-4 sm:grid-cols-3 xs:grid-cols-2 grid-cols-1 gap-3">
+              {querytext?(
                   <RenderPosts
                     data={searchresults}
                     title="No search results found!"
@@ -108,10 +104,8 @@ const Home = () => {
                     data={allposts}
                     title="No posts found!"
                   />
-                )}
-              </div>
-            </>
-          )}
+              )}
+            </div>
         </div>
       </div>
     </section>
