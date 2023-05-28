@@ -82,8 +82,8 @@ const CreatePost = () => {
         <h1 className="font-extrabold text-[#222328] text-4xl">
           Create Something New
         </h1>
-        <p className='md:text-lg font-medium text-[#bada55] text-md italic'>"Let the world see your creativity"</p>
-        <p className="mt-2 text-[#666e75] text-sm max-w-[500px]">
+        <p className='md:text-xl font-medium text-[#bada55] text-md italic'>"Let the world see your creativity"</p>
+        <p className="mt-2 text-[#666e75] md:text-md text-sm max-w-[500px]">
           Create imaginative and visually stunning images through DALL-E AI Second Draft and share them with the community
         </p>
       </div>
