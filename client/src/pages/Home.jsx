@@ -87,7 +87,7 @@ const Home = () => {
         </div>
 
         <div className="mt-10">
-          <Sugar customLoading={loading} background='#bada55' time={0}/>
+          <Sugar customLoading={allposts==null} background='#bada55' time={0}/>
             {!loading && 
             <>{querytext && (
               <h2 className="font-medium text-[#666e75] mb-3 text-xl">
