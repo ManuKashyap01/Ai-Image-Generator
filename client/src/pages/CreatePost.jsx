@@ -20,7 +20,7 @@ const CreatePost = () => {
     if(formdata.prompt && formdata.photo){
       setloading(true)
       try {
-        const res=await fetch('https://ai-image-generator-sc0i.onrender.com/api/v1/post',{
+        const res=await fetch('https://ai-image-generator12.up.railway.app/api/v1/post',{
           method:'POST',
           headers:{
             'Content-Type':'application/json'
@@ -54,7 +54,7 @@ const CreatePost = () => {
     if(formdata.prompt){
       try {
         setloadingimg(true)
-        const response=await fetch('https://ai-image-generator-sc0i.onrender.com/api/v1/dalle',{
+        const response=await fetch('https://ai-image-generator12.up.railway.app/api/v1/dalle',{
           method:'POST',
           headers:{
             'Content-Type':'application/json'
