@@ -28,7 +28,7 @@ const Home = () => {
     const fetchPosts=async()=>{
       setloading(true)
       try {
-        fetch('https://ai-image-generator12.up.railway.app/api/v1/post',{
+        fetch('https://nervous-ray-swimsuit.cyclic.app/api/v1/post',{
             method:'GET',
             headers:{
               'Content-Type':'application/json'
